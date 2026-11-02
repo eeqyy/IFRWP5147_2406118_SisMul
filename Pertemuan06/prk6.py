@@ -63,3 +63,43 @@ print(f"MSE: {mse:.4f}")
 print(f"PSNR: {psnr:.2f} dB")
 
 print("\nPerbandingan PNSR Manual dan Scikit-image")
+
+
+for nama, nama_file in daftar_jpeg.items():
+
+    img_kompresi = Image.open(nama_file).convert("RGB")
+    arr_kompresi = np.array(img_kompresi)
+
+    # Menghitung MSE
+    mse = hitung_mse(arr_asli, arr_kompresi)
+
+    # PSNR manual
+    psnr_manual = hitung_psnr_manual(mse)
+
+    # PSNR menggunakan scikit-image
+    psnr_skimage = peak_signal_noise_ratio(
+        arr_asli,
+        arr_kompresi,
+        data_range=255
+    )
+
+    print(f"\n{nama}")
+    print(f"PSNR Manual  : {psnr_manual:.2f} dB")
+    print(f"PSNR Skimage : {psnr_skimage:.2f} dB")
+    print("\nPERHITUNGAN SSIM")
+
+for nama, nama_file in daftar_jpeg.items():
+
+    img_kompresi = Image.open(nama_file).convert("RGB")
+    arr_kompresi = np.array(img_kompresi)
+
+    # Menghitung SSIM
+    ssim = structural_similarity(
+        arr_asli,
+        arr_kompresi,
+        channel_axis=2,
+        data_range=255
+    )
+
+    print(f"{nama}")
+    print(f"SSIM : {ssim:.4f}\n")
