@@ -35,3 +35,31 @@ def hitung_mse(gambar_asli, gambar_kompresi):
    mse = np.mean(selisih ** 2)
 
    return mse
+
+#daftar gambar jpeg
+gambar_jpeg = {
+   "JPEG 10": "hasil/jpeg_10.jpeg",
+   "JPEG 50": "hasil/jpeg_50.jpeg",
+   "JPEG 90": "hasil/jpeg_90.jpeg"
+}
+
+print("\nMULAI PERHITUNGAN MSE, PSNR MANUAL")
+
+for name, nama_file in daftar_jpeg.items():
+   img_kompresi = Image.open(nama_file).convert("RGB")
+   arr_kompresi = np.array(img_kompresi)
+
+   #memastikan dimensi gambar sama
+if arr_asli.shape != arr_kompresi.shape:
+     raise ValueError(f"Dimensi gambar tidak sama: {nama_file}")
+
+#menghitung MSE
+mse = hitung_mse(arr_asli, arr_kompresi)
+
+#menghitung PSNR
+psnr = hitung_psnr_manual(mse)
+print(f"\n{name}")
+print(f"MSE: {mse:.4f}")
+print(f"PSNR: {psnr:.2f} dB")
+
+print("\nPerbandingan PNSR Manual dan Scikit-image")
